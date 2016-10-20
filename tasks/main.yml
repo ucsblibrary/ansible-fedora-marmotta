@@ -1,3 +1,12 @@
 ---
 - include: tomcat.yml
+
+- name: Ensure {{ install_path }} is writeable
+  become: yes
+  file:
+    path: "{{ install_path }}"
+    state: directory
+    mode: 0777
+
 - include: fedora.yml
+- include: marmotta.yml

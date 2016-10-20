@@ -1,5 +1,6 @@
 ---
 - name: download Fedora
+  become: yes
   command: curl -L https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_ver }}/fcrepo-webapp-{{ fedora_ver }}.war \
            -o {{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war
   args:
@@ -27,15 +28,6 @@
   become: yes
   command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war {{ tomcat }}/webapps/fedora.war
   when: fedora_war.stat.exists == False
-
-- name: write Fedora password to secrets.yml
-  become: yes
-  lineinfile:
-      backup: yes
-      dest: "{{ config_path }}/secrets.yml"
-      state: present
-      insertafter: ^default
-      line: "  fedora_pass: {{ fedora_pass }}"
 
 - name: create Tomcat config and Java options
   become: yes
