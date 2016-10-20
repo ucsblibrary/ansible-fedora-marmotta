@@ -1,0 +1,33 @@
+# This variable is used to figure out if config is loaded or not.
+TOMCAT_CFG_LOADED="1"
+
+# In new-style instances, if CATALINA_BASE isn't specified, it will
+# be constructed by joining TOMCATS_BASE and NAME.
+TOMCATS_BASE="/var/lib/tomcats/"
+
+# Where your java installation lives
+JAVA_HOME="/usr/lib/jvm/jre"
+
+# Where your tomcat installation lives
+CATALINA_HOME={{ tomcat }}
+
+# System-wide tmp
+CATALINA_TMPDIR="/var/cache/tomcat/temp"
+
+# You can change your tomcat locale here
+#LANG="en_US"
+
+# Run tomcat under the Java Security Manager
+SECURITY_MANAGER="false"
+
+CATALINA_OPTS="-Dfcrepo.modeshape.configuration=classpath:/config/jdbc-postgresql/repository.json \
+               -Dfcrepo.home={{ project_base }}/fedora-data \
+               -Dfcrepo.ispn.postgresql.username={{ ispn_user }} \
+               -Dfcrepo.ispn.postgresql.password={{ ispn_pass }} \
+               -Djava.awt.headless=true \
+               -XX:+UseG1GC -XX:+UseCompressedOops \
+               -XX:-UseLargePagesIndividualAllocation \
+               -XX:MaxPermSize=128M -Xms512m -Xmx4096m \
+               -Djava.util.logging.config.file={{ tomcat }}/log4j.properties -server"
+
+MARMOTTA_HOME={{ marmotta_home }}

@@ -1,0 +1,46 @@
+---
+- name: download fedora
+  command: curl -L https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_ver }}/fcrepo-webapp-{{ fedora_ver }}.war \
+           -o {{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war
+  args:
+    creates: "{{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war"
+
+- name: checksum fedora source
+  command: sha256sum fcrepo-webapp-{{ fedora_ver }}.war
+  args:
+    chdir: "{{ install_path }}"
+  register: fedora_checksum
+
+- name: verify fedora checksum
+  fail: msg="The fedora checksum is incorrect ({{ fedora_checksum.stdout }} instead of {{ fedora_256 }})"
+  when: fedora_checksum.stdout != "{{ fedora_256 }}  fcrepo-webapp-{{ fedora_ver }}.war"
+
+- name: make fedora data dir
+  file: owner=tomcat group=tomcat state=directory path={{ project_base }}/fedora-data
+  become: yes
+
+- name: check fedora.war
+  stat: path={{ tomcat }}/webapps/fedora.war
+  register: fedora_war
+
+- name: copy over fedora.war
+  become: yes
+  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war {{ tomcat }}/webapps/fedora.war
+  when: fedora_war.stat.exists == False
+
+- name: write fedora password to secrets.yml
+  become: yes
+  lineinfile:
+      backup: yes
+      dest: "{{ config_path }}/secrets.yml"
+      state: present
+      insertafter: ^default
+      line: "  fedora_pass: {{ fedora_pass }}"
+
+- name: create tomcat config and java options
+  become: yes
+  template: src=tomcat.j2 dest=/etc/tomcat/tomcat.conf backup=yes
+
+- name: restart tomcat
+  become: yes
+  service: name=tomcat enabled=yes state=restarted

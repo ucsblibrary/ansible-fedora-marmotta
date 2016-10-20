@@ -1,0 +1,12 @@
+---
+- name: install tomcat packages
+  become: yes
+  yum: name={{ item }} state=present
+  with_items:
+      - tomcat
+      - tomcat-webapps
+      - tomcat-admin-webapps
+
+- name: set tomcat to restart on reboot
+  become: yes
+  service: name=tomcat enabled=yes
