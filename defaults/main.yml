@@ -6,8 +6,8 @@ deploy_group: deploy
 
 fedora_base_path: prod
 fedora_pass: fedoraAdmin
-fedora_ver: 4.5.1
-fedora_256: bdd7337c31216d102a897e2146c50e507db5ac2af51bf6f2bd61959878f09f65
+fedora_ver: 4.6.0
+fedora_256: 7e5efdb3c9b8fc7be5f5b34faaadfd295fe38045453475bb180874e12c072845
 
 tomcat: /usr/share/tomcat
 marmotta_home: "{{ project_base }}/marmotta"
