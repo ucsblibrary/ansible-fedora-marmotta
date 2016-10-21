@@ -1,15 +1,12 @@
-# database.h2.url = jdbc:h2:/tmp/marmotta/db/marmotta;MVCC=true;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=10
-# database.url = jdbc:h2:/tmp/marmotta/db/marmotta;MVCC=true;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=10
-# database.user = sa
-# database.password = sa
 database.type = postgres
-database.url = jdbc:postgresql://localhost:5432/marmotta?prepareThreshold=3
+database.url = jdbc:postgresql://{{ ispn_host }}:5432/marmotta?prepareThreshold=3
 database.user = {{ marmotta_pg_user }}
 database.password = {{ marmotta_pg_pass }}
 database.mode = create
 kiwi.setup.database = true
 kiwi.version = 3.3.0
 kiwi.path = /marmotta
+# everything is permitted, so this MUST NOT be publically available
 security.permission.solr_local_update.pattern = /solr/.*/update
 security.permission.solr_local_update.host = LOCAL
 security.permission.solr_local_update.methods = GET
