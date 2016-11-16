@@ -35,4 +35,7 @@
 
 - name: restart Tomcat
   become: yes
-  service: name=tomcat enabled=yes state=restarted
+  systemd:
+    name: tomcat
+    enabled: yes
+    state: restarted

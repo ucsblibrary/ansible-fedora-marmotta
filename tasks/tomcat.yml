@@ -7,6 +7,10 @@
     - tomcat-admin-webapps
     - tomcat-webapps
 
-- name: set Tomcat to restart on reboot
+- name: start Tomcat
   become: yes
-  service: name=tomcat enabled=yes
+  systemd:
+    daemon_reload: yes
+    name: tomcat
+    enabled: yes
+    state: started
