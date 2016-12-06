@@ -1,0 +1,16 @@
+---
+- name: start firewalld
+  become: yes
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+  # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/sec-Using_Firewalls.html
+- name: add Tomcat to firewalld allowed ports
+  become: yes
+  command: firewall-cmd --add-port=8080/tcp --permanent --zone=internal
+
+- name: reload firewalld
+  become: yes
+  command: firewall-cmd --reload
