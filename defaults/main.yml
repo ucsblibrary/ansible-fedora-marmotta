@@ -2,7 +2,6 @@
 project_base: /opt
 install_path: "{{ project_base }}/install"
 
-psql_host: localhost
 ispn_pass: fcrepo_pass
 ispn_user: fcrepo
 
