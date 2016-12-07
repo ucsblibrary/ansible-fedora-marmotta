@@ -1,5 +1,5 @@
 ---
-- include: tomcat.yml
+- include: install.yml
 
 - name: Ensure {{ install_path }} is writeable
   become: yes
@@ -10,4 +10,16 @@
 
 - include: fedora.yml
 - include: marmotta.yml
+
+- name: create Tomcat config and Java options
+  become: yes
+  template: src=tomcat.j2 dest=/etc/tomcat/tomcat.conf backup=yes
+
+- name: restart Tomcat
+  become: yes
+  systemd:
+    name: tomcat
+    enabled: yes
+    state: restarted
+
 - include: tomcat_firewall.yml
