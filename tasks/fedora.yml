@@ -21,7 +21,7 @@
     owner: tomcat
     group: tomcat
     state: directory
-    path: "{{ netapp_fedora_root }}/{{ netapp_fedora_subdirectory }}"
+    path: "{{ netapp_fedora_autofs['mount_point'] }}/{{ netapp_fedora_subdirectory }}"
   become: yes
 
 - name: Install Fedora

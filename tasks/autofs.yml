@@ -1,0 +1,60 @@
+---
+- name: install automount
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - autofs
+    - cifs-utils
+    - samba-client
+    - samba-common
+
+- name: create new auto.master
+  become: yes
+  copy:
+    src: auto.master
+    dest: /etc/auto.master
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: 0600
+
+- name: get tomcat uid
+  shell: id -u tomcat | tr -d '\n'
+  register: tomcat_uid
+
+- name: get tomcat gid
+  shell: id -g tomcat | tr -d '\n'
+  register: tomcat_gid
+
+- name: write mount configuration
+  become: yes
+  lineinfile:
+    create: yes
+    dest: /etc/auto.fedora
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: 0600
+    line: "{{ netapp_fedora_autofs['mount_point'] }} {{ netapp_fedora_autofs['mount_opts'] }},uid={{ tomcat_uid.stdout }},gid={{ tomcat_gid.stdout }},user={{ netapp_fedora_autofs['user'] }},password=\"{{ netapp_fedora_password }}\" {{ netapp_fedora_autofs['server'] }}"
+
+# - name: check mount point
+#   stat:
+#     path: "{{ netapp_fedora_autofs['mount_point'] }}"
+#   register: mnt
+
+# - name: create mount point
+#   become: yes
+#   file:
+#     path: "{{ netapp_fedora_autofs['mount_point'] }}"
+#     state: directory
+#     owner: "{{ ansible_ssh_user }}"
+#     group: "{{ ansible_ssh_user }}"
+#   when: mnt.stat.isdir is defined and mnt.stat.isdir
+
+- name: restart automount
+  become: yes
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    name: autofs
+    state: restarted
