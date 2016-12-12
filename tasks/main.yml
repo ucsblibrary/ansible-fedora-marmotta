@@ -1,6 +1,6 @@
 ---
-- include: autofs.yml
 - include: install.yml
+- include: autofs.yml
 
 - name: Ensure {{ install_path }} is writeable
   become: yes
