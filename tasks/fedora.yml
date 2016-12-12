@@ -16,15 +16,19 @@
   fail: msg="The fedora checksum is incorrect ({{ fedora_checksum.stdout }} instead of {{ fedora_256 }})"
   when: fedora_checksum.stdout != "{{ fedora_256 }}  fcrepo-webapp-{{ fedora_ver }}.war"
 
-- name: make Fedora data dir
-  file: owner=tomcat group=tomcat state=directory path={{ project_base }}/fedora-data
+- name: set ownership of Fedora data directory
+  file:
+    owner: tomcat
+    group: tomcat
+    state: directory
+    path: "{{ netapp_fedora_root }}/{{ netapp_fedora_subdirectory }}"
   become: yes
 
-- name: check fedora.war
-  stat: path={{ tomcat }}/webapps/fedora.war
-  register: fedora_war
-
-- name: copy over fedora.war
+- name: Install Fedora
   become: yes
-  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war {{ tomcat }}/webapps/fedora.war
-  when: fedora_war.stat.exists == False
+  copy:
+    dest: "{{ tomcat }}/webapps/fedora.war"
+    group: tomcat
+    owner: tomcat
+    remote_src: yes
+    src: "{{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war"
