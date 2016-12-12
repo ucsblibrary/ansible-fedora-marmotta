@@ -1,34 +1,9 @@
 ---
-- name: download Fedora
+- name: download and install Fedora
   become: yes
-  command: curl -L https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_ver }}/fcrepo-webapp-{{ fedora_ver }}.war \
-           -o {{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war
-  args:
-    creates: "{{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war"
-
-- name: checksum Fedora source
-  command: sha256sum fcrepo-webapp-{{ fedora_ver }}.war
-  args:
-    chdir: "{{ install_path }}"
-  register: fedora_checksum
-
-- name: verify Fedora checksum
-  fail: msg="The fedora checksum is incorrect ({{ fedora_checksum.stdout }} instead of {{ fedora_256 }})"
-  when: fedora_checksum.stdout != "{{ fedora_256 }}  fcrepo-webapp-{{ fedora_ver }}.war"
-
-- name: set ownership of Fedora data directory
-  file:
-    owner: tomcat
-    group: tomcat
-    state: directory
-    path: "{{ netapp_fedora_autofs['mount_point'] }}/{{ netapp_fedora_subdirectory }}"
-  become: yes
-
-- name: Install Fedora
-  become: yes
-  copy:
+  get_url:
+    url: https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_ver }}/fcrepo-webapp-{{ fedora_ver }}.war
+    checksum: sha256:{{ fedora_256 }}
     dest: "{{ tomcat }}/webapps/fedora.war"
     group: tomcat
     owner: tomcat
-    remote_src: yes
-    src: "{{ install_path }}/fcrepo-webapp-{{ fedora_ver }}.war"
