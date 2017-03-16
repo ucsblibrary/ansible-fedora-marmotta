@@ -13,10 +13,11 @@ fedora_256: 7e5efdb3c9b8fc7be5f5b34faaadfd295fe38045453475bb180874e12c072845
 tomcat: /usr/share/tomcat
 
 netapp_fedora_subdirectory: adrlstage26
-netapp_fedora_autofs: {
+netapp_fedora_fs: {
+  fs_type: "cifs",
   server: "://svmwindows-cifs02.library.ucsb.edu/fedoradata",
   mount_point: "/fedora-data",
-  mount_opts: "-fstype=cifs,rw,sec=ntlm,noexec,_netdev,noserverino,file_mode=0770,dir_mode=0770",
+  mount_opts: "rw,sec=ntlm,noexec,_netdev,noserverino,file_mode=0770,dir_mode=0770",
   user: "fedora"
 }
 
