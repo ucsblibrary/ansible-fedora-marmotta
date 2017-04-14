@@ -27,3 +27,9 @@
 - name: create Tomcat config and Java options
   become: yes
   template: src=tomcat.j2 dest=/etc/tomcat/tomcat.conf backup=yes
+
+- name: add log rotation for catalina.out
+  copy:
+    src: logrotate-tomcat.conf
+    dest: /etc/logrotate.d/tomcat7
+    backup: yes
