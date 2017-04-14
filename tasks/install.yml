@@ -1,8 +1,17 @@
 ---
-- name: install Tomcat and prerequisites
+- name: update all yum packages
   become: yes
-  yum: name={{ item }} state=present
+  yum:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: install Tomcat
+  become: yes
+  yum:
+    name: "{{ item }}"
   with_items:
+    - java-1.8.0-openjdk
     - tomcat
     - tomcat-admin-webapps
     - tomcat-webapps
@@ -14,3 +23,7 @@
     name: tomcat
     enabled: yes
     state: started
+
+- name: create Tomcat config and Java options
+  become: yes
+  template: src=tomcat.j2 dest=/etc/tomcat/tomcat.conf backup=yes

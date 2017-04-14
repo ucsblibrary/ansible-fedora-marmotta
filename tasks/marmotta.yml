@@ -1,4 +1,11 @@
 ---
+- name: Ensure {{ install_path }} is writeable
+  become: yes
+  file:
+    path: "{{ install_path }}"
+    state: directory
+    mode: 0777
+
 - name: download Marmotta
   get_url:
     url: http://mirror.cc.columbia.edu/pub/software/apache/marmotta/{{ marmotta_ver }}/apache-marmotta-{{ marmotta_ver }}-webapp.tar.gz
