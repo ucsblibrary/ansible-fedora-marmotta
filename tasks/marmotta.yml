@@ -1,6 +1,5 @@
 ---
 - name: Ensure {{ install_path }} is writeable
-  become: yes
   file:
     path: "{{ install_path }}"
     state: directory
@@ -22,20 +21,17 @@
     copy: no
 
 - name: install Marmotta
-  become: yes
   command: cp {{ install_path }}/apache-marmotta-{{ marmotta_ver }}/marmotta.war {{ tomcat }}/webapps/marmotta.war
   args:
     creates: "{{ tomcat }}/webapps/marmotta.war"
 
 - name: set ownership on marmotta.war
-  become: yes
   file:
     path: "{{ tomcat }}/webapps/marmotta.war"
     owner: tomcat
     group: tomcat
 
 - name: create {{ marmotta_home }}
-  become: yes
   file:
     group: tomcat
     owner: tomcat
@@ -43,7 +39,6 @@
     state: directory
 
 - name: set Marmotta system config properties
-  become: yes
   template:
     src: system-config.properties.j2
     dest: "{{ marmotta_home }}/system-config.properties"
@@ -52,7 +47,6 @@
     mode: 0600
 
 - name: restart Tomcat
-  become: yes
   service:
     name: tomcat
     enabled: yes
@@ -70,20 +64,17 @@
 # the library, then restart Tomcat again.
 
 - name: remove log4j-over-slf4j.jar
-  become: yes
   file: path={{ item }} state=absent
   with_items:
     - "{{ tomcat }}/webapps/marmotta/WEB-INF/lib/log4j-over-slf4j-1.7.7.jar"
 
   # Otherwise subsequent runs will hang on the "wait_for" above
 - name: touch removed library
-  become: yes
   file:
     path: "{{ tomcat }}/webapps/marmotta/WEB-INF/lib/log4j-over-slf4j-1.7.7.jar"
     state: touch
 
 - name: restart tomcat
-  become: yes
   service:
     name: tomcat
     enabled: yes

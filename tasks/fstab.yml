@@ -1,6 +1,5 @@
 ---
 - name: install fs utilities
-  become: yes
   yum:
     name: "{{ item }}"
     state: present
@@ -18,7 +17,6 @@
   register: tomcat_gid
 
 - name: write mount configuration
-  become: yes
   lineinfile:
     create: yes
     dest: /etc/fstab
@@ -42,5 +40,4 @@
 #   when: mnt.stat.isdir is defined and mnt.stat.isdir
 
 - name: mount new volumes
-  become: yes
   command: mount -a

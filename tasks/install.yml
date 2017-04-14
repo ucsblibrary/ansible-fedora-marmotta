@@ -1,13 +1,11 @@
 ---
 - name: update all yum packages
-  become: yes
   yum:
     name: "*"
     state: latest
     update_cache: yes
 
 - name: install Tomcat
-  become: yes
   yum:
     name: "{{ item }}"
   with_items:
@@ -17,7 +15,6 @@
     - tomcat-webapps
 
 - name: start Tomcat
-  become: yes
   systemd:
     daemon_reload: yes
     name: tomcat
@@ -25,7 +22,6 @@
     state: started
 
 - name: create Tomcat config and Java options
-  become: yes
   template: src=tomcat.j2 dest=/etc/tomcat/tomcat.conf backup=yes
 
 - name: add log rotation for catalina.out

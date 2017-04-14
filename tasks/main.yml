@@ -6,7 +6,6 @@
 - include: tomcat_firewall.yml
 
 - name: restart Tomcat
-  become: yes
   systemd:
     name: tomcat
     enabled: yes

@@ -1,6 +1,5 @@
 ---
 - name: download and install Fedora
-  become: yes
   get_url:
     url: https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_ver }}/fcrepo-webapp-{{ fedora_ver }}.war
     checksum: sha256:{{ fedora_256 }}
