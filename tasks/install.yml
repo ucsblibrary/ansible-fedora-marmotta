@@ -32,4 +32,3 @@
   copy:
     src: logrotate-tomcat.conf
     dest: /etc/logrotate.d/tomcat7
-    backup: yes
