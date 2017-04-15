@@ -1,6 +1,6 @@
 ---
 project_base: /opt
-install_path: "{{ project_base }}/install"
+install_path: "/tmp"
 
 ispn_pass: set-new-password
 ispn_user: fcrepo
