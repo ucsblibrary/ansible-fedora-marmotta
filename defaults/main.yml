@@ -2,7 +2,7 @@
 project_base: /opt
 install_path: "{{ project_base }}/install"
 
-ispn_pass: fcrepo_pass
+ispn_pass: set-new-password
 ispn_user: fcrepo
 psql_host: localhost
 
@@ -28,4 +28,4 @@ marmotta_group: marmotta
 marmotta_user: marmotta
 marmotta_db: marmotta
 marmotta_pg_user: marmotta
-marmotta_pg_pass: abcmarmotta
+marmotta_pg_pass: set-new-password
