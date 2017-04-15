@@ -1,5 +1,5 @@
 ---
-- include: install.yml
+- include: tomcat.yml
 - include: fedora.yml
 - include: marmotta.yml
 - include: tomcat_firewall.yml

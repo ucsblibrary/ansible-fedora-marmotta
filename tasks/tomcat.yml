@@ -22,7 +22,9 @@
     state: started
 
 - name: create Tomcat config and Java options
-  template: src=tomcat.j2 dest=/etc/tomcat/tomcat.conf backup=yes
+  template:
+    src: tomcat.j2
+    dest: /etc/tomcat/tomcat.conf
 
 - name: add log rotation for catalina.out
   copy:
