@@ -32,6 +32,12 @@ RHEL/CentOS.
 - `ispn_user` the name of Fedora’s PostgreSQL role; defaults to
   `fcrepo`
 
+- `fedora_fs` a dict defining the mount point for the volume Fedora
+  will write binary data to; defaults to `{ mount_point: "{{ project_base }}/fedora—data" }`.
+
+- `fedora_subdirectory` the directory within the
+  `fedora_fs.mount_point` where this instance of Fedora should write to.
+
 ### Marmotta
 
 - `marmotta_ver` the version of Marmotta to install; defaults to
