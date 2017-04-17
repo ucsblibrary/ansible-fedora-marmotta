@@ -13,9 +13,10 @@
 
 - name: unpack Marmotta
   unarchive:
-    src: "{{ install_path }}/apache-marmotta-{{ marmotta_ver }}-webapp.tar.gz"
-    dest: "{{ install_path }}/"
     creates: "{{ install_path }}/apache-marmotta-{{ marmotta_ver }}/marmotta.war"
+    dest: "{{ install_path }}/"
+    remote_src: yes
+    src: "{{ install_path }}/apache-marmotta-{{ marmotta_ver }}-webapp.tar.gz"
 
 - name: install Marmotta
   copy:
