@@ -6,3 +6,12 @@
     dest: "{{ tomcat }}/webapps/fedora.war"
     group: tomcat
     owner: tomcat
+
+- name: ensure Fedora data directory exists
+  file:
+    group: tomcat
+    owner: tomcat
+    path: "{{ item['mount_point'] }}/{{ fedora_subdirectory }}"
+    recurse: yes
+    state: directory
+  with_items: "{{ fedora_fs }}"
