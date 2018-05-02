@@ -22,7 +22,7 @@ RHEL/CentOS.
 
 - `fedora_base_path` the REST API root; defaults to `prod`
 
-- `fedora_ver` the version of Fedora to install; defaults to `4.6.0`.
+- `fedora_ver` the version of Fedora to install; defaults to `4.7.5`.
 
 - `fedora_256` the SHA-256 of the Fedora download.
 
