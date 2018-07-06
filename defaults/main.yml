@@ -16,8 +16,8 @@ fedora_fs:
   - { mount_point: "{{ project_base }}/fedora-data" }
 fedora_subdirectory: development
 
-marmotta_256: 34c37281b6875ea95da391ae5bbe059f31091f3c6bf2529539241b35690c84b0
+marmotta_256: 4026abd91d1c4fd6b11c906b116d1eb0f6d28c0520db29b3d8c15636d4e95ddd
 marmotta_home: "{{ project_base }}/marmotta"
 marmotta_pg_pass: set-new-password
 marmotta_pg_user: marmotta
-marmotta_ver: 3.3.0
+marmotta_ver: 3.4.0
