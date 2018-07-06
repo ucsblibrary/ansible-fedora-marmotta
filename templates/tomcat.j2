@@ -20,9 +20,9 @@ SECURITY_MANAGER="false"
 # https://wiki.duraspace.org/display/FEDORA451/Configuring+JDBC+Object+Store
 CATALINA_OPTS="-Dfcrepo.modeshape.configuration=classpath:/config/jdbc-postgresql/repository.json \
                -Dfcrepo.home={{ fedora_fs[0]['mount_point'] }}/{{ fedora_subdirectory }} \
-               -Dfcrepo.ispn.postgresql.host={{ psql_host }} \
-               -Dfcrepo.ispn.postgresql.password={{ ispn_pass }} \
-               -Dfcrepo.ispn.postgresql.username={{ ispn_user }} \
+               -Dfcrepo.postgresql.host={{ psql_host }} \
+               -Dfcrepo.postgresql.password={{ ispn_pass }} \
+               -Dfcrepo.postgresql.username={{ ispn_user }} \
                -Djava.awt.headless=true \
                -XX:+UseG1GC -XX:+UseCompressedOops \
                -XX:-UseLargePagesIndividualAllocation \
